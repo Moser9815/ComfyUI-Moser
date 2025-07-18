@@ -13,9 +13,17 @@ const updateWidget = async (widget, fromValue, toValue) => {
 
 const calculateNextNumber = (mode, currentValue, min, max) => {
     let newValue;
+    console.log(`calculateNextNumber called with mode: ${mode}, currentValue: ${currentValue}, min: ${min}, max: ${max}`);
+    
     switch (mode) {
         case "Random":
-            newValue = Math.floor(Math.random() * (max - min + 1)) + min;
+            // Ensure we have valid min/max values
+            if (min >= max) {
+                console.warn(`Invalid range: min (${min}) >= max (${max}), using min as fallback`);
+                newValue = min;
+            } else {
+                newValue = Math.floor(Math.random() * (max - min + 1)) + min;
+            }
             console.log(`Random mode: Generating random number between ${min} and ${max}: ${newValue}`);
             return newValue;
         case "Increment":
@@ -108,7 +116,8 @@ app.registerExtension({
                     );
                     if (node) {
                         console.log(`Moser Styles Full node (ID: ${e.detail}) has begun execution`);
-                        setTimeout(() => handleExecutionStart(node), 250);
+                        // Use a shorter delay and add retry logic for better reliability
+                        setTimeout(() => handleExecutionStart(node), 100);
                     }
                 }
             });

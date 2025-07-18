@@ -65,7 +65,7 @@ class MoserStylesFull:
 
     @classmethod
     def IS_CHANGED(cls, **kwargs):
-        return float("NaN") if kwargs.get("selection_mode") == "Random" else False
+        return float("NaN") if kwargs.get("mode") == "Random" else False
 
     def load_style(self, prompt_file, mode, previous_prompt, next_prompt, minimum, maximum):
         print(f"Executing node with Next Prompt value: {next_prompt}")
